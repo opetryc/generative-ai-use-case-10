@@ -1,9 +1,11 @@
 package com.softserve.opetryc
 
-val specialCharacters = "!\"#\$%&'()*+,-./:;<=>?@[]^_`{|}~\\".toList()
+const val specialCharacters = "!\"#$%%&'()*+,-./:;<=>?@\\]\\[\\\\^_`{|}~"
 
-private val specialRegex =
-    "(?!\\s.+)(?=^\\s*\\S+\\s*\$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!\"#\$%&'()*+,-./:;<=>?@\\]\\[\\\\^_`{|}~]).+(?<!\\s)\$".toRegex()
+private const val specialRegex = "^(?!.*\\s.*)(?=.{%d}$)(?=.*[a-z].*)(?=.*[A-Z].*)(?=.*\\d.*)(.*[%s].*)$"
 
-val String.isSpecialRegexValid: Boolean
-    get() = specialRegex.containsMatchIn(this)
+fun String.isValid(maxLength: Int = this.length): Boolean {
+    val regexStr = specialRegex.format(maxLength, specialCharacters)
+    val regex = Regex(regexStr)
+    return regex.containsMatchIn(this)
+}
