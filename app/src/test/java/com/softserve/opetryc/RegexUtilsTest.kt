@@ -136,8 +136,8 @@ class RegexUtilsTest {
     }
 
     @Test
-    fun `fail if number of characters is less than expected`() {
-        assertFalse("Aa2%".isValid(10))
+    fun `fail if number of characters is within the range`() {
+        assertTrue("Aa2%".isValid(10))
     }
 
     @Test
@@ -149,5 +149,10 @@ class RegexUtilsTest {
     fun `pass if number of characters is as expected`() {
         val str = "Agfdhgjkldrhl&9*&*352"
         assertTrue(str.isValid(str.length))
+    }
+
+    @Test
+    fun `fail even if expecting length of 0`() {
+        assertFalse("".isValid(0))
     }
 }
